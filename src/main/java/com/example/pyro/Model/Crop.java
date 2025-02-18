@@ -16,7 +16,7 @@ public class Crop {
     @DBRef
     private Farmer farmer;
     private String current_stage;
-    private String progress;
+    private double progress;
     private List<Object> tasks;
     private List<Object> planner;
     
@@ -44,10 +44,10 @@ public class Crop {
     public void setCurrent_stage(String current_stage) {
         this.current_stage = current_stage;
     }
-    public String getProgress() {
+    public double getProgress() {
         return progress;
     }
-    public void setProgress(String progress) {
+    public void setProgress(double progress) {
         this.progress = progress;
     }
     public List<Object> getTasks() {

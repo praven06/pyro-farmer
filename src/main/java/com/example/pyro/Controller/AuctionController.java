@@ -5,7 +5,9 @@ import com.example.pyro.Services.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +22,13 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Auctions> createAuction(@RequestBody Auctions auction) {
-        return ResponseEntity.ok(auctionService.saveAuction(auction));
+    @PostMapping(value = "/create", consumes = {"multipart/form-data"})
+    public ResponseEntity<Auctions> createAuction(
+            @RequestPart("data") String auctionJson,
+            @RequestPart(value = "itemImage", required = false) MultipartFile file
+    ) throws IOException {
+        Auctions savedAuction = auctionService.saveAuction(auctionJson, file);
+        return ResponseEntity.ok(savedAuction);
     }
 
     @GetMapping("/{auctionId}")
@@ -44,7 +50,7 @@ public class AuctionController {
 
     @PutMapping("/{auctionId}")
     public ResponseEntity<Auctions> updateAuction(@PathVariable String auctionId,
-            @RequestBody Auctions updatedAuction) {
+                                                  @RequestBody Auctions updatedAuction) {
         Auctions auction = auctionService.updateAuction(auctionId, updatedAuction);
         return auction != null ? ResponseEntity.ok(auction) : ResponseEntity.notFound().build();
     }

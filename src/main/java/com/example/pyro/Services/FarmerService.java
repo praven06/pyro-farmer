@@ -4,6 +4,7 @@ import com.example.pyro.Model.Crop;
 import com.example.pyro.Model.Farmer;
 import com.example.pyro.Repositories.FarmerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,11 @@ public class FarmerService {
         }
         return null;
     }
+    public Farmer loginFarmer( Farmer farmer){ 
+        System.out.println(farmer + "idhu dhaan farmer");; 
 
+        return farmerRepository.findByUsernameAndPassword(farmer.getUsername(),farmer.getPassword());
+    }
     public Farmer updateCropForFarmer(String farmerId, String cropId, Crop updatedCrop) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
         if (farmerOptional.isPresent()) {
@@ -69,5 +74,15 @@ public class FarmerService {
             return farmerRepository.save(farmer);
         }
         return null;
+    }
+    public ResponseEntity<Object> deleteFarmer(String farmerId){
+        try {
+            
+            farmerRepository.deleteById(farmerId);
+            return ResponseEntity.ok().body("user deleted by rooban");
+            
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -36,6 +36,7 @@ public class SharesController {
 
     @GetMapping("/farmer/{farmerId}")
     public ResponseEntity<List<Shares>> getSharesByFarmer(@PathVariable String farmerId) {
+        System.out.println(farmerId + " idhu dhaan da thambi farmer id");
         return ResponseEntity.ok(sharesService.getSharesByFarmer(farmerId));
     }
 

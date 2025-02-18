@@ -7,5 +7,5 @@ import com.example.pyro.Model.Farmer;
 
 @Repository
 public interface FarmerRepository extends MongoRepository<Farmer,String> {
-    
+    Farmer findByUsernameAndPassword(String username,String password);
 } 

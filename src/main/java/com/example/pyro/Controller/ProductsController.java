@@ -23,9 +23,21 @@ public class ProductsController {
 
     @PostMapping("/create")
     public ResponseEntity<Products> createProduct(@RequestBody Products product) {
-        return ResponseEntity.ok(productsService.createProduct(product));
+        System.out.println(product.getId() + " idhu dhaan da product id ");
+        if (product.getPrice() <= 0 || product.getQuantity() <= 0 || product.getCrop() == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        Products savedProduct = productsService.createProduct(product);
+
+        return ResponseEntity.ok(savedProduct);  
     }
 
+    @GetMapping("/allproducts")
+    public ResponseEntity<List<Products>> getAllProducts(){
+        List<Products> products = productsService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
     @GetMapping("/{productId}")
     public ResponseEntity<Products> getProductById(@PathVariable String productId) {
         Optional<Products> product = productsService.getProductById(productId);

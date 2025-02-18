@@ -14,16 +14,22 @@ public class Shares {
     
     @Id
     private String share_id;
-
     @DBRef
     private Farmer creater;
     private double total_amount;
     private double total_split;
     private int no_of_shares;
-
+    // private String farmer_id;
     @DBRef
     @JsonIgnore
     private List<User> shareholders = new ArrayList<>(); 
+    public Farmer getCreater() {
+        return creater;
+    }
+
+    public void setCreater(Farmer creater) {
+        this.creater = creater;
+    }
     private double cost_of_share;
     private String address;
     private String expected_yeild;

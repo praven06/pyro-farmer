@@ -19,9 +19,16 @@ public class ProductsService {
     private ProductsRepository productsRepository;
 
     public Products createProduct(Products product) {
-        return productsRepository.save(product);
+        try {
+            return productsRepository.save(product);
+        } catch (Exception e) {
+            throw new Error(e.getMessage());
+        }
+        // return productsRepository.save(product);
     }
-
+    public List<Products> getAllProducts(){
+        return productsRepository.findAll();
+    }
     public Optional<Products> getProductById(String productId) {
         return productsRepository.findById(productId);
     }

@@ -55,4 +55,13 @@ public class FarmerController {
         Farmer updatedFarmer = farmerService.deleteCropFromFarmer(farmerId, cropId);
         return updatedFarmer != null ? ResponseEntity.ok(updatedFarmer) : ResponseEntity.notFound().build();
     }
+    @PostMapping("/login")
+    public ResponseEntity<Farmer> loginFarmer(@RequestBody Farmer farmer) {
+        Farmer loggedFarmer = farmerService.loginFarmer(farmer);
+        return loggedFarmer != null ? ResponseEntity.ok(loggedFarmer) : ResponseEntity.notFound().build();  
+    }
+    @DeleteMapping("/{farmerId}")
+    public ResponseEntity<Object> deleteFarmer(@PathVariable String farmerId){
+        return farmerService.deleteFarmer(farmerId);
+    }
 }
