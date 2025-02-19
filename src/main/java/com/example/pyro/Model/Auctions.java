@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Auctions {
     
     @Id
-    private String auction_id;
+    private String auctionId;
     private String auction_name;
     @JsonProperty("starting_bid")
     private double start_bid;
@@ -22,15 +22,29 @@ public class Auctions {
     private String properties;
     private String auction_image;
     private LocalDateTime createdAt = LocalDateTime.now();
+    private double top_bid;
+    private String farmerId;
+    public String getFarmerId() {
+        return farmerId;
+    }
+    public void setFarmerId(String farmerId) {
+        this.farmerId = farmerId;
+    }
     @DBRef
     private Farmer farmer;
 
 
-    public String getAuction_id() {
-        return auction_id;
+    public double getTop_bid() {
+        return top_bid;
     }
-    public void setAuction_id(String auction_id) {
-        this.auction_id = auction_id;
+    public void setTop_bid(double top_bid) {
+        this.top_bid = top_bid;
+    }
+    public String getauctionId() {
+        return auctionId;
+    }
+    public void setauctionId(String auctionId) {
+        this.auctionId = auctionId;
     }
     public String getAuction_name() {
         return auction_name;
@@ -43,6 +57,7 @@ public class Auctions {
         return start_bid;
     }
     public void setStart_bid(double start_bid) {
+        
         this.start_bid = start_bid;
     }
     public double getQuantity_available() {

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -21,15 +23,19 @@ public class AuctionController {
     public AuctionController(AuctionService auctionService) {
         this.auctionService = auctionService;
     }
+@PostMapping(value = "/create", consumes = {"multipart/form-data"})
+public ResponseEntity<Map<String, String>> createAuction(
+        @RequestPart("data") String auctionJson,
+        @RequestPart(value = "itemImage", required = false) MultipartFile file
+) throws IOException {
+    Auctions savedAuction = auctionService.saveAuction(auctionJson, file);
+    System.out.println("Saved Auction: " + savedAuction);
 
-    @PostMapping(value = "/create", consumes = {"multipart/form-data"})
-    public ResponseEntity<Auctions> createAuction(
-            @RequestPart("data") String auctionJson,
-            @RequestPart(value = "itemImage", required = false) MultipartFile file
-    ) throws IOException {
-        Auctions savedAuction = auctionService.saveAuction(auctionJson, file);
-        return ResponseEntity.ok(savedAuction);
-    }
+    Map<String, String> response = new HashMap<>();
+    response.put("auctionId", savedAuction.getauctionId());
+
+    return ResponseEntity.ok(response);
+}
 
     @GetMapping("/{auctionId}")
     public ResponseEntity<Auctions> getAuctionById(@PathVariable String auctionId) {

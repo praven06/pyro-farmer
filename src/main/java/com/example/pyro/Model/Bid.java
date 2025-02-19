@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class Bid {
     private String bidderName;
     private double bidAmount;
+    
+    
 }

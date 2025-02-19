@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AuctionRepository extends MongoRepository<Auctions, String> {
     List<Auctions> findByFarmer_Id(String farmerId);
+    Auctions findByAuctionId(String auctionId);
 }
