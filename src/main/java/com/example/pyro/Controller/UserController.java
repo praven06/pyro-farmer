@@ -8,7 +8,7 @@ import com.example.pyro.Services.UserService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,21 +17,32 @@ import java.util.List;
 
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
-    private SharesService sharesService;
-
+    private final SharesService sharesService;
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,SharesService sharesService) {
         this.userService = userService;
+        this.sharesService = sharesService;
     }
 
-    @PostMapping(value = "/create")
+    @GetMapping("/login")
+    public ResponseEntity<String> userLogin(@RequestParam String email, @RequestParam String password) {
+        boolean isAuthenticated = userService.userLogin(email, password);
+        if (isAuthenticated) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+    }
+    
+
+    @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }

@@ -17,6 +17,11 @@ public class SharesController {
     @Autowired
     private SharesService sharesService;
 
+    @GetMapping("/get")
+    public ResponseEntity<Object> getShares() {
+        return ResponseEntity.ok(sharesService.getShares());
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Shares> createShare(@RequestBody Shares share) {
         return ResponseEntity.ok(sharesService.createShare(share));
