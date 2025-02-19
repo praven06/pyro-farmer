@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document("farmers")
 public class Farmer {
     
@@ -27,7 +29,7 @@ public class Farmer {
     private List<String> previous_crops;
     private List<String> water_resources;
     private String irrigation;
-
+    // @JsonIgnore
     private List<Crop> crop;
     private int no_of_water_sources;
     

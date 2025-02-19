@@ -21,8 +21,9 @@ public class Shares {
     private int no_of_shares;
     // private String farmer_id;
     @DBRef
-    @JsonIgnore
+    // @JsonIgnore
     private List<User> shareholders = new ArrayList<>(); 
+    // private Integer cost_of_share;
     public Farmer getCreater() {
         return creater;
     }

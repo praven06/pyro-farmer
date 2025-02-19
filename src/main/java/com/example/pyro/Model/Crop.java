@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document("crops")
 public class Crop {
     
@@ -13,6 +15,7 @@ public class Crop {
     private String id;
 
     private String name;
+    @JsonIgnore
     @DBRef
     private Farmer farmer;
     private String current_stage;

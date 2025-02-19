@@ -1,24 +1,28 @@
 package com.example.pyro.Controller;
-import org.springframework.web.bind.annotation.*;
+
+import com.example.pyro.Model.Bid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.*;
 
 @RestController
+@RequestMapping("/api/auction")
 public class LongPollingController {
-
-    private final BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Bid> bidQueue = new LinkedBlockingQueue<>();
 
     @GetMapping("/poll")
-    public ResponseEntity<String> poll() throws InterruptedException {
-        String message = messageQueue.poll(); 
-        if(message != null)
-        return ResponseEntity.ok( message);
-        else return ResponseEntity.noContent().build();
+    public ResponseEntity<Bid> pollBid() {
+        
+            Bid bid = bidQueue.poll();
+            return bid != null 
+                ? ResponseEntity.ok(bid)
+                : ResponseEntity.noContent().build();
+    
     }
 
-    @PostMapping("/send")
-    public ResponseEntity<String> sendMessage(@RequestBody String message) {
-        messageQueue.offer(message);
-        return ResponseEntity.ok("Message sent!");
+    @PostMapping("/bid")
+    public ResponseEntity<Bid> submitBid(@RequestBody Bid bid) {
+        bidQueue.offer(bid);
+        return ResponseEntity.ok(bid);
     }
 }
