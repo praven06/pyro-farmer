@@ -23,6 +23,16 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public boolean userLogin(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return user.getPassword().equals(password); 
+        }
+        return false;
+    }   
+
     public User createUser(User user) {
         return userRepository.save(user);
     }

@@ -2,6 +2,7 @@ package com.example.pyro.Services;
 
 import com.example.pyro.Model.Shares;
 import com.example.pyro.Model.User;
+import com.example.pyro.Repositories.FarmerRepository;
 import com.example.pyro.Repositories.SharesRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,18 @@ public class SharesService {
 
     @Autowired
     private SharesRepository sharesRepository;
+    private FarmerRepository farmerRepository;
 
+    public List<Shares> getShares() {
+        List<Shares> sharesList = sharesRepository.findAll();
+        for (Shares share : sharesList) {
+            if (share.getCreater() != null) {
+                share.setCreater(farmerRepository.findById(share.getCreater().getId()).orElse(null));
+            }
+        }
+        return sharesList;
+    }    
   
-
     public Shares createShare(Shares share) {
         return sharesRepository.save(share);
     }
