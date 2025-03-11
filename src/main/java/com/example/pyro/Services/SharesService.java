@@ -23,6 +23,7 @@ public class SharesService {
     }
 
     public List<Shares> getSharesByFarmer(String id) {
+        System.out.println(id + " idhiu dhaan id ");
         return sharesRepository.findByCreater_Id(id);
     }
 
